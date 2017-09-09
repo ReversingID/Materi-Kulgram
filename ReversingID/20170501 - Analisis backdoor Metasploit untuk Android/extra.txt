@@ -1,0 +1,39 @@
+so, sapa yang kemaren hadir ke kulgramnya om edo?
+
+*brb baca kulgram kemaren
+
+waktu itu om edo udah ngasih tau beberapa hal tentang malware secara umum dan khusus.
+
+jadi backdoor itu pintu belakang. Ato kalo dibahasakan secara gaul, backdoor itu apapun baik kode, program dsb yang bisa ngasih akses ke kita tanpa harus melewati jalan yang semestinya (login, misalnya).
+
+ada yang mengasosiasikan backdoor itu sebagai trojan. Sebenernya nggak juga, karena trojan itu adalah salah satu cara kita membuat adanya backdoor di komputer korban. Yang lainnya apa? Misalnya ketika login, dengan memasukkan username dan password tertentu maka kita akan bisa masuk ke sistem dengan hak akses tertinggi (di software itu). Ini juga backdoor.
+
+tapi bahasan yang menarik memang membuat backdoor dengan cara memasang trojan ke orang, terutama hape.
+
+Ketika bahas aplikasi yang sudah dipasang backdoor, sebenarnya proses yang terjadi (secara umum) adalah melakukan binding ato penempelan aplikasi trojan kita ke aplikasi korban. Di OS yang lebih modern biasanya aplikasi perlu di-sign jadi kita juga mesti menandatangani lagi si aplikasi.
+
+biasanya tutor-tutor bikin backdoor yang ada menggunakan metasploit. Tahapannya 
+- buat payload dengan msfpayload
+- tempelkan payload ke aplikasi tak berdosa
+- bikin listener di tempat kita.
+
+listener gunanya untuk mendengarkan dan menjawab adanya panggilan masuk dari si korban dimanapun dia berada. Jadi kata kunci untuk koneksi yang berhasil adalah, komputer kita (si pengendali) harus bisa dihubungi oleh si korban.
+
+jika komputer kita dan hape korban berada di jaringan yang sama, bisa langsung saja dihubungi tanpa kendala berarti. Tapi jika hape korban berada di jaringan yang berbeda maka kita perlu buat satu buah mesin yang akan dihubungi oleh backdoor kemudian si mesin itu akan melakukan forward ke mesin kita. Bahasan ini silahkan dikorek lagi nanti, kita akan bahas backdoornya. Yang penting konsep koneksinya begitu.
+
+konsep trojan yang dibawa oleh si metasploit ini adalah konsep trojan yang terdiri dari 2 buah lapisan. Maksudnya gmn?
+
+"backdoor" yang dihasilkan oleh si metasploit (yang akan ditempelkan ke aplikasi) sebenarnya tidak mengandung kode utama si trojan. Tidak ada kode untuk ngambil sms, ambil gambar, dsb. Lalu kok bisa kita ambil sms dkk dari hape korban kalo di backdoor itu gak ada kode untuk itu?
+
+jawabannya adalah, karena kode itu akan dikirim belakangan.
+
+lapisan maksudnya tahap.
+
+kode yang dihasilkan oleh msfpayload adalah kode untuk menghubungi master, alias komputer kita. Dari sana ia akan melakukan download terhadap kode malware yang sesungguhnya kemudian kembali berkomunikasi dengan kita, menunggu perintah kita.
+
+nah kode yang didonlot itulah yang berisi kode program untuk melakukan banyak hal, mulai dari ambil sms, ambil foto, dsb.
+
+untuk analisis dah dijelasin sama om edo, ada static analysis dan dynamic analysis.
+static analysis kita bisa liat permission yang gak diinginkan seperti READ_PHONE_STATE, SEND_SMS, dkk.
+
+eh, sekarang pake msfvenom yak, bukan msfpayload lagi

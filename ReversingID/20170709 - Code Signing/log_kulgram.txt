@@ -1,0 +1,144 @@
+Satria Ady Pradana, 
+--------------------
+oke, kulgram kali ini mengenai code signing. Kita akan membahas tentang apa itu code signing, apa efeknya, dan bagaimana kisah malware meng-abuse code signing untuk mengelabui AV.
+kali ini pematerinya ada 2 yaitu saya dan @rhmtnf . Di awal kita akan bahas dulu dasarnya secara singkat terus dilanjutkan oleh rahmat untuk bagian abusing-nya
+
+secara sederhana code signing artinya memberikan tanda bahwa sebuah aplikasi itu benar dibuat oleh pihak yang tepercaya
+
+kalo formalnya.
+code signing adalah proses untuk menandatangani secara digital sebuah program executable ato script untuk menjamin bahwa kode tidak berubah ato corrupt semenjak ditandatangani. Signature ini hanya menjamin bahwa program dikeluarkan oleh pihak yang benar, tidak menjamin bahwa program ini tidak malicious
+
+apa saja yang bisa di-sign? executables biasa dan drivers
+
+nah code signing ini prinsipnya sama seperti digital certificate biasa (x509 certificate). Dia memanfaatkan yang namanya PKI (Public Key Infrastructure)
+
+seseorang yang ingin sign program harus memiliki sepasang kunci, private-public key. Private key digunakan untuk melakukan sign, dan kunci ini harus dijaga hanya dia yang tau. Sementara public key, dilepas ke publik dan biasanya tertanam di sertifikat sehingga dapat digunakan untuk memverifikasi bahwa program ini benar.
+
+mirip kalo konek ke web HTTPS (yang pake SSL), kita akan meminta (dan dikasih) sertifikat yang menandakan identitas si server, beserta kunci publiknya. Bedanya di sini kita hanya menggunakan sertifikat itu untuk memverifikasi identitas program apakah benar dibikin oleh developer
+
+darimana sertifikat bisa didapat?
+ada 2, bisa self-signed, bisa minta pihak lain untuk membuatkannya.
+1. self sign berarti kita bikin sendiri sertifikatnya, kita tanda tangani sendiri
+2. kalo minta pihak lain, berarti kita ngasih kan public key kita beserta beberapa informasi ke sebuah entitas bernama CA (Certificate Authority) untuk dibuatkan sertifikat.
+
+[File: hello_app.exe]
+
+[File: hello_app_sign.exe]
+
+di atas adalah 2 aplikasi yang melakukan hal yang sama yaitu menampilkan teks melalui messagebox. Bedanya satu aplikasi nggak ditandatangani, satunya ditandatangani
+
+ini kita batasi pake windows ya, dalam kasus ini aku pake windows 10.
+
+ketika aku jalankan, karena aplikasi ini masih belum dikenal (unknown publisher) maka dia akan menampilkan pesan peringatan seperti ini
+
+[Image: tmp_run.png]
+
+kalo kita klik kanan dan klik properties pada masing-masing program, kita akan liat ada perbedaan.
+aplikasi yang punya digital signature akan memiliki tab tambahan seperti ini
+
+[Image: tmp_properties.png]
+
+kebetulan itu aku ambil dari internet, jadi sertifikatnya ya sertifikat orang :v
+
+karena tadi dijelaskan salah satu alternatif pembuatan sertifikat adalah memanfaatkan jasa pihak ketiga (CA), makan kita akan lihat bahwa sertifikat itu nanti berbentuk hirarki.
+
+sertifikat A diterbitkan oleh B
+B juga punya sertifikat, diterbitkan oleh C
+dsb
+
+sampe ke suatu entitas yang disebut root CA, paling dipercaya untuk menerbitkan sertifikat.
+kalo kita klik details maka akan tampil detail pemilik sertifikat itu dan siapa yang menjaminnya
+
+konsepnya sama kayak ijazah sekolah kita.
+
+aku lulus SMA, bagaimana membuktikannya? dari ijazah (sertifikat) yang dikeluarkan oleh sekolahku.
+bagaimana mempercayai kalo sekolahnya bener / gak abal-abal (terutama yang swasta)? bisa dilihat dari sertifikat yang dikeluarkan oleh pemerintah melalui badan terkait (telah terakreditasi)
+dengna begitu orang bisa memverifikasi kalo aku bener udah lulus.
+
+[Image: tmp_detail_cert.png]
+
+nah windows menyimpan secara default menyimpan beberapa sertifikat root yang otomatis tepercaya.
+
+biasanya kalo ada perubahan, windows akan melakukan update dari server windows untuk download daftar sertifikat baru.
+
+kita juga bisa daftarkan sertifikat sendiri yang dipercaya. Tapi itu bahasan lain.
+
+jadi itu tadi soal definisi code signing. dan efeknya.
+selanjutnya akan dilanjutkan oleh om @rhmtnf  untuk demo ngelabui Anti Virus dengan code signing
+
+
+Rahmat Nur Fauzi,
+-----------------
+
+oke, selanjutnya saya akan mendemo kan bagaimana beberapa AvP (Antivirus Product) bisa melewati deteksi dengan cara ini, tetapi tidak semua antivirus product.
+
+Untuk melakukan code signing disini saya akan mengunakan tools seperti openssl dan signcode. untuk tool openssl digunakan untuk membuat certificate self-signed sedangkan tool signcode digunakan untuk melakukan sign ke PE executable.
+
+Jadi sebelumnya kita harus meninstall kedua tools tersebut terlebih dahulu:
+# apt-get install -y mono-devel openssl
+
+Contoh untuk program disini agar lebih cepat, saya membuat sebuah malicious program dengan menggunakan tool msfvenom yang sudah tersedia di OS Kali Linux.
+
+[Image: photo_2017-07-09_17-04-26.jpg]
+
+Hal pertama yang harus kita lakukan adalah membuat RSA key dengan panjang 4096 bit untuk root CA nya dengan expire 365 hari dengan tool openssl:
+
+[Image: photo_2017-07-09_17-05-47.jpg]
+
+disini kita sedang membuat certificate self-signed
+
+untuk command yg diatas :
+openssl req -x509 -newkey rsa:4096 -keyout microsoft_key.pem -out microsoft_cert.pem -days 365 -subj "/C=US/ST=Washington/L=Redmond/O=Microsoft Corporation/OU=MOPR/CN=Microsoft Corporation"
+
+lalu masukan pass phrase, disini saya menggunakan pass phrase yg sama untuk setiap pass pharse H@LXSDE$@$!
+
+Kedua mengubah private key dari microsoft_key.pem ke format .pvk dengan perintah dibawah ini:
+openssl rsa -in microsoft_key.pem -outform PVK -pvk-strong -out authenticode.pvk
+
+[Image: image.png]
+
+File .pvk yang berisi informasi private key.
+File .spc (software publisher certificate) yang berisi informasi public key.
+
+informasi lebih lanjut mengenai software publisher certificate bisa lihat disini http://www.softwarepublishercertificate.com/
+
+Ketiga mengubahnya ke .spc file
+openssl crl2pkcs7 -nocrl -certfile microsoft_cert.pem -outform DER -out authenticode.spc
+
+[Image: image2.png]
+
+[In reply to Rahmat Nurfauzi]
+di step ini akan diminta memasukan pass pharse lagi saya menggunakan pass phrase sebelumnya yg awal
+
+Dalam kasus ini sepasang file (.pvk dan.spc) harus dikonversi ke file .pfx untuk menambahkan informasi di sertifikat.
+
+Yang terakhir melakukan code signing ke PE executable yang telah dibuat tadi, myprogram.exe adalah programnya:
+
+signcode -spc authenticode.spc -v authenticode.pvk  -a sha1 -\$ commercial -n MyApp -i http://www.microsoft.com/ -i http://timestamp.verisign.com/scripts/timestamp.dll -tr 10 myprogram.exe
+
+[Image: photo_2017-07-09_17-13-36.jpg]
+
+lalu diminta untuk memasukan key dari authenticode.pvk yang telah dimasukan sebelumnya. Disini kita berhasil melakukan code signing, selanjutnya kita akan analisa melalui virustotal berapa banyak yang berhasil terlewati dari program sesudah dilakukan code signing dan sebelum dilakukan code signing.
+
+[Image: photo_2017-07-09_17-16-43.jpg]
+
+diatas adalah program yang sebelum dilakukan code signing, terlihat bahwa terdeteksi 50 / 63
+
+[Image: photo_2017-07-09_17-18-15.jpg]
+
+diatas adalah program yang sudah dilakukan code signing, terlihat bahwa terdeteksi 35 / 63 yang artinya kita berhasil melewati 15 Antivirus product yang dilakukan dengan cara code signing.
+
+Program setelah dilakukan code signing myprogram.exe :
+https://www.virustotal.com/en/file/5017c397af608cdc53bdeee0ae5d4186372f48577ada29df5b842d55f0204170/analysis/1499592176/
+
+Program yang belum dilakukan code signing myprogram.exe.bak:
+https://www.virustotal.com/en/file/0f6e78c825b134c8ca3c5494db65651fa1e7e5a80256299042cdbe6632fd234f/analysis/1499592319/
+
+Cara diatas adalah bisa menjadi alternatif untuk menghindari dari deteksi antivirus, beberapa malware seperti Petya menggunakan teknik ini
+
+http://securitywatch.pcmag.com/security-software/283583-malware-digitally-signed-with-fake-certificate
+https://www.symantec.com/connect/blogs/malware-using-fake-certificate-evade-detection
+
+[File: myprogram.exe]
+
+[File: myprogram.exe.bak]

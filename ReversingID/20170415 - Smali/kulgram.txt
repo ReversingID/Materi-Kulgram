@@ -1,0 +1,345 @@
+oke, selamat datang semua, thanks dah gabung ke reversing.id dan ke kulgram ini
+
+materi kita hari ini adalah tentang smali. Kita akan kenalan dengan smali, nggak terlalu dalam dulu tapi cukup untuk ngoprek sendiri.
+
+mungkin ada yang sudah tau smali dan ada yang belum tau. Tapi kalo kita ngomong android semua pada tau android. Ya, smali berhubungan dengan android. Jadi, apa itu smali?
+
+bisa dibilang, smali adalah assembly untuk aplikasi android
+
+seperti yang kita tahu, android itu jalan di banyak tempat, ada yang pake prosesor ARM seperti di kebanyakan hape dan  tablet, ada pula yang pake x86. Nah untuk menyeragamkan platform yang beda-beda itu, android bikin yang namanya DalvikVM. Aplikasi yang dibuat untuk android berjalan di atas DalvikVM ini.
+
+bagi yang pernah membuat aplikasi di android, pasti paham kalo bahasa yang dipake adalah bahasa java. Secara magic, android studio membuat apk dan jalan di atas android.
+
+Java itu bahasa interpreted, dia dijalankan di atas virtual machine bernama JavaVM. Tapi masalahnya, javavm itu kurang cocok untuk hape, maka dibuatlah itu DalvikVM yang lebih ringan.
+
+nah ketika kita bikin apk, kode java itu di-compile menjadi .class yang jalan di atas JavaVM seperti umumnya. Kemudian oleh program bernama dx, file .class ini diubah menjadi .dex
+
+bagi yang berminat dengan reverse engineering pada android, pasti kita akan berhadapan dengan yang namanya .dex ini, karena semua instruksi / kode program ada di dalamnya.
+
+tapi dimanakah .dex ini berada? dia ada di dalam setiap file apk. File apk sendiri adalah sebuah file zip yang bisa dibuka pake aplikasi 7z ato winzip. Di setiap apk pasti ada yang namanya classes.dex, inilah file .dex yang kita maksud
+
+nah, smali bisa dikatakan adalah bahasa assembly untuk merepresentasikan instruksi di dex tersebut yang lebih manusiawi.
+
+sebagai contoh, silahkan ke https://apkpure.com dan donlot sebarang file yang kalian inginkan.
+
+pilih satu file apk dan buka dengan winzip / 7z kalian akan lihat beberapa file salah satunya adalah file dex
+
+sebagai contoh, saya akan donlot file ini https://apkpure.com/colornote-notepad-notes/com.socialnmobile.dictapps.notepad.color.note
+
+random cari file note di playstore, nemu notes dan download itu di apkpure
+
+dalam reverse engineering, yang kita lakukan sebenarnya simple: mempelajari barang orang lain.
+
+reverse engineering adalah bagaimana cara membedah barang, mendapatkan informasi darinya, dan mengotak-atik barang itu sesuai kebutuhan kita.
+
+sebenarnya bisa saja kita decompile langsung classes.dex itu balik menjadi file java, tapi nggak seru...
+maksudku, kadang kita perlu melakukan modifikasi di level smali (assembly)
+
+jika kalian berpikir, kok cuman ada 1 file dex? kan pas ngoding ada banyak banget file java.
+
+jawabannya adalah, sama seperti bikin aplikasi pake C, semua modul itu di-compile dan di-merge jadi satu aplikasi. Dengan kata lain, file classes.dex itu memuat semua kode program yang kita tuliskan
+
+salah satu jenis tools yang kita pake dalam reverse engineering adalah disassembler. Tools jenis ini digunakan untuk mengubah file binari menjadi file assembler
+
+untuk smali, kita gunakan yang namanya smali/baksmali.
+https://github.com/JesusFreke/smali
+
+untuk donlot binary di sini deh: https://bitbucket.org/JesusFreke/smali/downloads/
+
+smali / baksmali digunakan untuk "assembling" dan "disassembling" sebuah file .dex
+
+jadi untuk mengubah classes.dex menjadi "assembly", kita gunakan perintah ini:
+
+	$ java -jar baksmali.jar d classes.dex 
+
+maka akan ada folder baru bernama "out"
+
+di dalamnya, kalian bisa liat ada folder-folder lain.
+
+yup, file .dex bisa dipecah lagi menjadi beberapa file sesuai dengan file kode sumber awalnya
+
+jadi kalo kalian ato developer membuat aplikasi android dengan banyak file dan direktori, ketika di apk akan jadi satu file classes.dex doang, tapi dapat dibalikin lagi
+
+tapi kalo kita harus bongkar apk secara manual dan jalankan smali/baksmali secara manual kan capek, maka ada aplikasi lain yang memuat pekerjaan itu, namanya apktool
+
+	https://ibotpeaches.github.io/Apktool/
+
+kita pake yang latest aja yak, 2.2.2, itu yang kupake sekarang
+kalo mau donlot bisa ke https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.2.2.jar
+
+menggunakan apktool, kita bisa berikan perintah:
+
+	java -jar apktool.jar d aplikasi.apk
+
+maka akan terbentuk sebuah direktori dengan nama apk tersebut. Jika kalian liat di terminal, maka akan keliatan tuh ada banyak hal yang dilakukan, salah satunya adalah baksmali tadi
+
+di dalam direktori ada beberapa direktori yaitu, original, res, dan smali. File smali semua ada di dalam direktori smali
+
+sekarang kita bahas lagi smali. Kita lihat apa hasil disassembling
+
+kemudian aku coba buka a.smali
+
+kira-kira inilah contohnya smali.
+Jangan takut kalo belum bisa memahami itu, karena kulgram kita hari adalah bagaimana memahami smali (gak terlalu dalam)
+
+bagi yang cukup jeli di awal, mungkin penasaran, kok namanya aneh gitu sih. Adanya cuman file a.smali sampe i.smali. Nama folder, yang kalo di java merepresentasikan nama package, juga aneh, masa foldernya ada com\a\a
+
+selamat, ternyata aplikasi ini telah di-obfuscate. Artinya nama-nama yang dibuat oleh developer ini disamarkan sehingga gak sesuai dengan nama di source code.
+
+tadi udah lihat kan salah satu bedanya dengan aplikasi C? ketika kita reverse .dex, kita bisa mendapatkan kembali kode smalinya yang terpisah berdasarkan file-file java asal (tapi dalam bentuk smali)
+
+beda lain dengan aplikasi C dalah, sebenarnya kita bisa mendapatkan struktur dari aplikasi, mulai dari kelas hingga method.
+
+makanya reversing aplikasi android itu lebih mudah. Untuk mencegah hal ini, kebanyakan aplikasi komersial melakukan obfuscated. Nama kelas disamarkan.
+
+tapi gpp, kita coba liat dulu satu file smali.
+
+jika pernah belajar tentang java, sebenarnya kita akan lebih mudah untuk melihat file smali ini, karena file smali benar-benar mirip dengan kode sumber java, cuman assembly aja bentuknya.
+
+bisa dilihat
+
+.class public final Lcom/a/a/a;
+.super Ljava/lang/Throwable;
+
+ini seperti mendeklarasikan sebuah kelas com.a.a.a dengan parent yaitu java.lang.Throwable
+
+kemudian ini
+
+.field private static final serialVersionUID:J = 0x1L
+
+seperti yang dikomentarin, ini adalah field yang static. Nggak beda dengan java kan?
+
+smali seperti halnya assembly, terdapat beberapa instruksi. Tapi instruksi assembly berbeda dengan instruksi bahasa tingkat tinggi seperti C kan?
+
+bahasa assembly adalah bahasa rada low level, instruksinya sederhana.
+
+ada beberapa kelompok instruksi dalam smali, yaitu
+1. instruksi untuk assignment
+2. instruksi untuk percabangan & pemanggilan fungsi
+3. instruksi untuk operasi aritmetik
+4. instruksi untuk operasi logika
+
+sesimpel apa sih instruksi dalam smali?
+
+mungkin jika di java kita kalo melakukan assignment ke variabel dengan cara
+
+variabel = nilai
+
+misal,
+
+variabel = 13510;
+
+tapi di smali, kita gak kenal yang namanya variabel. Begitu pula dengan di assembly. Karena kita beroperasi di ranah bawah.
+
+DalvikVM, dan juga ART yang jadi penerusnya, adalah virtual machine yang berbasis register
+
+coba perhatikan lagi smali-nya, kalian akan melihat seperti p0, p1, p3, dsb.
+
+di tempat lain mungkin akan liat v0, v1, dst
+
+di assembly, register adalah tenpat untuk menampung nilai dan melakukan operasi2 terhadap nilaibtersebut
+
+nah kalo misalnya ada operasi gini di java
+
+a = b * 2 = 50;
+
+di assembly kayak apa?
+
+ingat, operasi hanya dilakukan di register, dan operasi di smali / assembly itu sederhana, operasi dasar, sehingga operasi yang kompleks harus kita pecah jadi rangkaian operasi dasar
+
+ralat,
+a = b * 2 + 50
+
+yang bisa kita lakukan adalah
+1. isi sebuah register dengan nilai
+2. kalikan register itu dengan 2
+3. tambahkan register itu dengan 50
+4. kita dapatkan hasilnya.
+
+seperti itulah operasi sederhana di assembly, dalam artian hanya operasi dasar saja. Ketika kita membutuhkan operasi yang kompleks maka kita harus merangkai operasi-operasi dasar
+
+assembly adalah representasi dari bahasa mesin, berupa command-command dasar yang didukung oleh si prosesor / VM
+
+mesin mengenal hanya deretan nilai hex, seperti 53 02 87 12 dsb tapi kita manusia nggak
+
+kita taunya, command tertentu adalah seperti ini, jadi kita kodekan saja.
+
+misal, mov a, b
+itu representasi command untuk assignment a dengan nilai b
+
+ketika kita bahas smali kita harus tau dulu karakteristik dari Dalvik
+
+Dalvik itu adalah register based VM. Dalvik berbeda dengan prosesor. Kalo pernah liat assembly, pasti pernah tau yang namanya stack. Di Dalvik gak ada.
+
+jadi Dalvik hanya bermain di register saja. Masalah stack dan pemanggilan fungsi itu di-handle oleh VM, dan gak bisa dicampurtangani di smali
+
+nah tadi kan ada beberapa kategori instruksi.
+
+1. instruksi untuk assignment
+2. instruksi untuk percabangan & pemanggilan fungsi
+3. instruksi untuk operasi aritmetik
+4. instruksi untuk operasi logika
+
+assignment adalah instruksi untuk mengisi nilai ke register, nilai yang diisi bisa nilai konstan bisa nilai dari register lain, bisa hasil operasi
+
+instruksi assembly untuk assignment adalah move.
+
+move sendiri bisa ada banyak variannya, bisa move-wide untuk memindahkan nilai wide integer, move-object untuk memindahkan objek ke register, dsb.
+
+tapi kalo kalian liat move, artinya dia mengisikan sesuatu ke register.
+
+Bentuk umumnya adalah
+
+move destination, source
+
+register yang menjadi tempat menampung dituliskan duluan baru source.
+
+source tadi bisa bermacam-maca
+
+kategori instruksi berikutnya adalah percabangan dan pemanggilan fungsi
+
+aplikasi itu kan dinamis, pasti ada percabangan. Maksudnya gmn? aplikasi itu nggak kayak cerita, dari awal sampe akhir ya gitu, monoton. Pasti di suatu saat kita akan dihadapkan pada suatu pilihan
+
+kalo di bahasa atas kita kenal yang namanya "if"
+
+if (a == 5) {
+printf("hehehe");
+} else {
+printf("Nah lho");
+}
+
+misalnya di atas, kita ada pilihan kondisi, kalo misalnya variabel a nilai 5, maka kita lakukan instruksi printf("hehehe");, sebaliknya kita lakukan instruksi printf("Nah lho")
+
+kalo di assembly, cara kita melihat kasus dan kondisi itu dengan cara mengetes nilai register, kemudian kita akan melihat hasil dari test yang sudah dilakukan.
+
+tesnya macam apa?
+
+test-nya adalah sesederhana mengetes nilai, apakah X lebih besar dari sesuatu? apakah lebih kecil dari sesuatu?
+
+ketika kondisi itu terpenuhi, maka ia akan lompat ke label. Jika tidak maka instruksi akan berjalan kembali ke instruksi di bawahnya
+
+jadi, if di atas akan menjadi (asumsi v0 adalah variabelnya, dan v1 berisi 5)
+
+if (a == 5)
+{
+printf("hehehe");
+}
+
+menjadi
+
+if-ne v0, v1, label_nahlho
+printf("hehehe")
+nahlho:
+instruksi lainnya
+
+ne = not equal (tidak sama dengan)
+eq = equal (sama dengan)
+lt = less than (kurang dari)
+ge = greater than or equal (kurang dari atau sama dengan)
+gt = greater than (lebih dari)
+le = less than or equal (kurang dari atau sama dengan)
+
+jadi bentuk umumnya adalah
+
+if-kondisi register1, register2, label
+
+label adalah posisi di memori yang menunjukkan instruksi
+
+ini sama dengan assembly lainnya.
+
+untuk pemanggilan fungsi, kata kuncinya adalah invoke
+
+tapi karena di java ada banyak sekali tipe fungsi / method, maka jadinya ada beragam invoke
+
+invoke-virtual = memanggil fungsi virtual
+invoke-super = memanggil fungsinya si orang tua
+invoke-direct = memanggil fungsi yang bukan static
+invoke-static  = memanggil fungsi yang static
+invoke-interface = memanggil fungsi interface
+
+mungkin terlihat banyak, tapi positifnya adalah, kita bisa tau bahwa fungsi yang kita hadapin itu apa.
+
+operasi artimetik adalah operasi matematika:
+tambah, kurang, kali, bagi, modulus
+
+kata kuncinya adalah add (tambah), sub (kurang, mul (kali), div (bagi), rem (remainder dari modulus)
+
+tapi operasi ini membutuhkan tipe data dari si operasi. Sehingga kalian akan menemukan sesuatu seperti
+
+add-int, sub-long, mul-int, div-long, dsb
+
+selanjutnya adalah operasi logika. Macam apa?
+
+kalo belajar logika pasti ingat dengan and, or, xor, dsb.
+
+nah, sama, di sini juga ada.
+
+kemudian ada juga misc seperti
+
+new-array
+new-instance
+instance-of
+
+dsb
+itu sama sebenernya dengan yang ada di java.
+
+ada juga iput, iget. DI java yang berbasis kelas-kelas, ada yang namanya field kan? kemudian kita kenal yang namanya setter dan getter atau fungsi yang digunakan untuk mendapatkan atau mengeset field tersebut.
+
+iput adalah instance put, artinya mengisi nilai untuk instance objek ini
+iget adalah instance get, mendapatkan nilainya.
+
+selain itu ada sput, sget, untuk static field
+
+dengan berbekal penjelasan tadi maka kita sedikti banyak tau apa yang ada di kode asmali.txt
+
+di dalam kode itu, dia:
+- invoke-direct, berarti dia memanggil fungsi.
+- iput berarti mengisi nilai ke field
+
+kemudian diakhiri dengan return-void.
+
+smali lebih simple daripada assembly.
+yang membuatnya lebih ribet adalah beragamnya variasi yang bisa dilakukan. Itu saja.
+
+sekarang bagaimana kita mengedit-edit?
+gampang saja :D
+kita tinggal edit kode kemudian kita tinggal compile lagi.
+
+yap, kita gak perlu repot memikirkan tentang offset ato alamat memori seperti ketika kita membahas aplikasi binari exe karena kode dalvik tidak memerlukan alamat dsb.
+
+setelah selesai mengedit, kita dapat membuat kembali file .dex dengan cara:
+
+java -jar smali.jar a direktori_paling_pucuk
+
+atau jika menggunakan apktool dengan cara (bedanya dia bikin apk)
+
+java -jar apktool.jar b direktori_paling_pucuk
+
+biasanya apa yang bisa kita edit di smali?
+kita biasanya edit:
+- kondisi if, misalnya pengecekan apakah udah register ato belum, bikin aja gak ngecek :p
+- nilai yang dimasukkan ke register
+- urutan pengerjaan fungsi
+dsb
+
+kenapa smali itu penting kita pelajari? karena kadang kala ketika suatu binary di-obfuscate kita tidak bisa mendekompilasi .dex dengan baik
+
+maksudnya?
+saya daritadi merahasiakan bahwa sesungguhnya .dex bisa diterjemahkan balik menjadi .jar (yang isinya .class java). Dari .class itu tadi kita bisa mendapatkan source code java karena source code java bisa didecompile
+
+bagaimana ini bisa terjadi?
+simple saja, kita membalik dari smali menjadi class
+
+di salah satu challenge ctf, saya sempat dekompilasi suatu file dex, java-nya ngaco, logic if-else nya gak bener. Akhirnya saya memahami alur program dengan cara melihat smalinya. Kenapa bisa ngaco? karena obfuscation yang dilakukan dengan cara memecah kode-kode dan urutannya diacak lewat label-label. Jadi saya harus menelusuri labelnya
+
+nah apa itu odex? tadi sempet disinggung.
+odex adalah optimized dex. Artinya odex itu adalah versi optimized untuk platform tertentu. Bedanya apa? entahlah, pokoknya udah optimized
+
+odex itu terkait erat dengan instruksi prosesor (bukan instruksi dalvik murni), sehingga ketika dieksekusi dia lebih cepat karena dia mengeksekusi kode untuk prosesor
+
+di android, ada yang namanya file oat, letaknya adalah /system/framework/arm/boot.oat
+file ini adalah file reference yang digunakan untuk reference kode instruksi odex (CMIIW).
+
+cara disassembly jadi smali adalah dengan
+
+java -jar baksmali.jar -x -c boot.oat -d nama_file.odex
