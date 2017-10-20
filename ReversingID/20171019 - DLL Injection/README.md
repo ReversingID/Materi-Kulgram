@@ -1,0 +1,1 @@
+Ini adalah kulgram kesekian kali di grup telegram Reversing.ID. Di kulgram kali ini yang dibawakan oleh Satria Ady Pradana, ia membahas tentang teknik DLL Injection untuk memodifikasi binary pada saat runtime
