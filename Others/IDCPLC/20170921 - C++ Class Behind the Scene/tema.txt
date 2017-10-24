@@ -1,0 +1,12 @@
+Tema utama:
+bagaimana object direpresentasikan dalam C++.
+
+
+Representasi Kelas di Memory
+	Padding
+
+Polymorphism dan Inheritance
+	typecasting 
+	
+Penerapan Override
+	Virtual Tables
